@@ -1,0 +1,66 @@
+{
+  "groups": {
+    "group:me": ["me"],
+    "group:friends": ["bob", "doug", "me"],
+    "group:family": ["mom", "dad"]
+  },
+  "tagOwners": {
+    "tag:plex": ["group:me"],
+    "tag:homelab-router": ["group:me"],
+    "tag:game-server": ["group:friends"]
+  },
+
+
+  "hosts": {
+    "nas.internal": "192.168.240.161/32",
+    "homelab.internal": "192.168.240.0/24"
+  },
+  
+  "acls": [
+    // friends have access to game servers
+    {
+      "action": "accept",
+      "src": ["group:friends"],
+      "dst": [
+        "tag:game-server:*"
+      ]
+    },
+
+    // Family has access to plex
+    {
+      "action": "accept",
+      "src": ["group:family"],
+      "proto": "tcp",
+      "dst": [
+        "tag:plex:32400"
+      ]
+    },
+
+
+    // Bob needs access to my NAS for a project we are working on together
+    {
+      "action": "accept",
+      "src": ["bob"],
+      "dst": [
+	      "nas.internal:*",
+	      "tag:homelab-router:*"]
+    },
+
+    // allow myself access to my homelab
+    {
+      "action": "accept",
+      "src": ["group:me"],
+      "dst": ["homelab.internal:*"]
+    },
+
+
+    // We still have to allow internal users communications since nothing guarantees that each user have
+    // their own users.
+    { "action": "accept", "src": ["me"], "dst": ["me:*"] },
+    { "action": "accept", "src": ["bob"], "dst": ["bob:*"] },
+    { "action": "accept", "src": ["doug"], "dst": ["doug:*"] },
+    { "action": "accept", "src": ["mom"], "dst": ["mom:*"] },
+    { "action": "accept", "src": ["dad"], "dst": ["dad:*"] },
+    { "action": "accept", "src": ["sis"], "dst": ["sis:*"] }
+  ]
+}
