@@ -46,7 +46,7 @@
 	      "tag:homelab-router:*"]
     },
 
-    // allow myself access to my home@lab
+    // allow myself access to my homelab
     {
       "action": "accept",
       "src": ["group:me"],
