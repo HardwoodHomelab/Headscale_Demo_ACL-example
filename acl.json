@@ -6,23 +6,23 @@
   },
   "tagOwners": {
     "tag:plex": ["group:me"],
-    "tag:home@lab-router": ["group:me"],
-    "tag:game@-server": ["group:friends"]
+    "tag:homelab-router": ["group:me"],
+    "tag:game-server": ["group:friends"]
   },
 
 
   "hosts": {
     "nas.internal": "192.168.240.161/32",
-    "home@lab.internal": "192.168.240.0/24"
+    "homelab.internal": "192.168.240.0/24"
   },
   
   "acls": [
-    // friends have access to game@ servers
+    // friends have access to game servers
     {
       "action": "accept",
       "src": ["group:friends"],
       "dst": [
-        "tag:game@-server:*"
+        "tag:game-server:*"
       ]
     },
 
@@ -43,14 +43,14 @@
       "src": ["bob@"],
       "dst": [
 	      "nas.internal:*",
-	      "tag:home@lab-router:*"]
+	      "tag:homelab-router:*"]
     },
 
     // allow myself access to my home@lab
     {
       "action": "accept",
       "src": ["group:me"],
-      "dst": ["home@lab.internal:*"]
+      "dst": ["homelab.internal:*"]
     },
 
 
